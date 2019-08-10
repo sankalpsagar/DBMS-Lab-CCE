@@ -1,0 +1,50 @@
+create table PERSON (driver_id varchar(30) primary key, name varchar (50), address varchar(100));
+create table CAR (regno varchar(20) primary key, model varchar (30), year int);
+create table ACCIDENT (report_number int primary key, accd_date date, location varchar(50));
+create table OWNS (driver_id varchar(30), regno varchar (20), primary key (driver_id, regno), foreign key (driver_id) references PERSON, foreign key(regno) references CAR);
+create table PARTICIPATED (driver_id varchar (30), regno varchar (20), report_number int, damage_amount int, primary key (driver_id, regno, report_number), foreign key (driver_id) references PERSON, foreign key (regno) references CAR, foreign key(report_number) references ACCIDENT);
+desc PERSON
+desc CAR
+desc ACCIDENT
+desc OWNS
+desc PARTICIPATED
+insert into person values('D01', 'Sankalp Sagar', '301, Bangalore');
+insert into person values('D02', 'Plaknas Ragar', '103, Delhi');
+insert into person values('D03', 'Pratyasa Sarma', '420, Noida');
+insert into person values('D04', 'Mrigank Mohan', '117, Mumbai');
+insert into person values('D05', 'Ishi Yadav', '204, Vellore');
+insert into car values('4200', 'Jetta', 2017);
+insert into car values('4210', 'WagonR', 2016);
+insert into car values('8100', 'City', 2018);
+insert into car values('8200', 'Duster', 2018);
+insert into car values('8400', 'Accord', 2015);
+insert into accident values(100, DATE '2018-04-01', 'Manipal');
+insert into accident values(101, DATE '2018-04-02', 'Manipal');
+insert into accident values(102, DATE '2018-04-11', 'Udupi');
+insert into accident values(103, DATE '2018-04-12', 'Mangalore');
+insert into accident values(104, DATE '2018-04-13', 'Vellore');
+select * from accident;
+insert into owns values ('D01', '4200');
+insert into owns values ('D02', '4210');
+insert into owns values ('D03', '8100');
+insert into owns values ('D04', '8200');
+insert into owns values ('D05', '8400');
+insert into participated values ('D01', '4200', 100, 4000);
+insert into participated values ('D02', '4210', 101, 5000);
+insert into participated values ('D03', '8100', 102, 5500);
+insert into participated values ('D04', '8200', 103, 6500);
+insert into participated values ('D05', '8400', 104, 7000);
+insert into person values('D06', 'Spandana Shetty', '69, Mangalore');
+insert into car values('8600', '520d', 2017);
+insert into accident values('12', DATE '2018-04-20', 'Mangalore');
+insert into owns values('D06', '8600');
+insert into participated values('D06', '8600', 12, 10000);
+update PARTICIPATED set damage_amount=25000 where report_number=12;
+select * from participated;
+
+
+
+
+
+
+
