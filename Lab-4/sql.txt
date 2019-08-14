@@ -1,0 +1,5 @@
+select count(*) from accident where extract (year from accd_date) = '2008';
+select count(report_number) from accident NATURAL JOIN participated NATURAL JOIN CAR where car.model = 'City';
+select PERSON.name as Owner_Name, count(report_number) as No_of_Accidents, sum(damage_amount) as Total_Amount from PERSON NATURAL JOIN PARTICIPATED group by PERSON.name;
+select driver_id from PARTICIPATED NATURAL JOIN ACCIDENT where extract(year from accd_date) = '2018' having count(report_number)>1 group by driver_id;
+
