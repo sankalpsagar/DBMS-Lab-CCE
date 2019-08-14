@@ -41,10 +41,47 @@ insert into owns values('D06', '8600');
 insert into participated values('D06', '8600', 12, 10000);
 update PARTICIPATED set damage_amount=25000 where report_number=12;
 select * from participated;
-
-
-
-
-
-
-
+insert into accident values(07, DATE '1999-04-01', 'Manipal');
+delete from accident where extract (year from accd_date) = '1999';
+select * from accident;
+alter table accident add abc integer;
+alter table accident drop column abc;
+alter table accident add check (length(location)>0);
+create table CUSTOMER (cust integer primary key, cname varchar (50), city varchar(30));
+create table ORDERS (order# integer primary key, odate date, cust integer, ordamt integer, foreign key (cust) references CUSTOMER);
+create table ITEM (item# int primary key, unitprice int);
+create table ORDER_ITEMS(order# integer, item# integer, qty integer, primary key(order#, item#), foreign key (order#) references ORDERS, foreign key (item#) references ITEM);
+create table SHIPMENT (order# integer, warehouse# integer, shipdate date, primary key (order#), foreign key(order#) references ORDERS);
+create table WAREHOUSE (warehouse# integer, city varchar(30), primary key (warehouse#), foreign key (warehouse#) references SHIPMENT);
+insert into CUSTOMER values(01, 'San', 'Delhi');
+insert into CUSTOMER values(02, 'Mri', 'Mumbai');
+insert into CUSTOMER values(03, 'Ish', 'Vellore');
+insert into CUSTOMER values(04, 'Sud', 'Bangalore');
+insert into CUSTOMER values(05, 'Kri', 'Manipal');
+insert into orders values (01, date '2019-01-01', 01, 4);
+insert into orders values (02, date '2019-01-04', 02, 5);
+insert into orders values (03, date '2019-01-05', 03, 8);
+insert into orders values (04, date '2019-01-07', 04, 1);
+insert into orders values (05, date '2019-01-11', 05, 3);
+insert into item values (01, 100);
+insert into item values (02, 300);
+insert into item values (03, 150);
+insert into item values (04, 700);
+insert into item values (05, 80);
+insert into order_items values (01, 01, 4);
+insert into order_items values (02, 02, 5);
+insert into order_items values (03, 03, 8);
+insert into order_items values (04, 04, 1);
+insert into order_items values (05, 05, 3);
+insert into shipment values (01, 01, date '2019-02-01');
+insert into shipment values (02, 02, date '2019-02-04');
+insert into shipment values (03, 03, date '2019-02-05');
+insert into shipment values (04, 04, date '2019-02-07');
+insert into shipment values (05, 05, date '2019-02-11');
+insert into warehouse values (01, 'Pondicherry');
+insert into warehouse values (02, 'Mumbai');
+insert into warehouse values (03, 'Delhi');
+insert into warehouse values (04, 'Hyderabad');
+insert into warehouse values (05, 'Kolkatta');
+select customer.cname as custname, sum(ordamt) as no_of_orders, avg(ordamt) as avg_order_amt from customer NATURAL JOIN orders group by cname;
+select orders.order# from orders, shipment, warehouse where orders.order# = shipment.order# and shipment.warehouse# = warehouse.warehouse# and warehouse.city = 'Delhi';
