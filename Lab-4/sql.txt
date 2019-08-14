@@ -1,2 +1,0 @@
-select count(*) from accident where extract (year from accd_date) = '2008';
-select count(report_number) from accident NATURAL JOIN participated NATURAL JOIN CAR where car.model = 'City';
