@@ -6,8 +6,8 @@ select driver_id from PARTICIPATED NATURAL JOIN ACCIDENT where extract(year from
 select cname from CUSTOMER natural join ORDERS natural join SHIPMENT where ORDERS.odate = DATE '2015-05-09';
 select order#, qty from order_items where qty = (select max(qty) from order_items);
 select shipdate from order_items natural join shipment where order_items.qty = (select max(qty) from order_items);
-delete from order_items where item = 20;
-delete from item where item = 20;
+delete from order_items where item# = 20;
+delete from item where item# = 20;
 select order# from shipment natural join warehouse where warehouse.city = 'Delhi';
 select cname from customer where cname like '%an';
 select cname, sum(ordamt) as t_ordamt from customer natural join orders group by cname order by t_ordamt desc;
