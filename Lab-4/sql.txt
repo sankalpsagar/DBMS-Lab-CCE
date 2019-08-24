@@ -2,4 +2,13 @@ select count(*) from accident where extract (year from accd_date) = '2008';
 select count(report_number) from accident NATURAL JOIN participated NATURAL JOIN CAR where car.model = 'City';
 select PERSON.name as Owner_Name, count(report_number) as No_of_Accidents, sum(damage_amount) as Total_Amount from PERSON NATURAL JOIN PARTICIPATED group by PERSON.name;
 select driver_id from PARTICIPATED NATURAL JOIN ACCIDENT where extract(year from accd_date) = '2018' having count(report_number)>1 group by driver_id;
-
+(select name from PERSON) minus (select name from PERSON natural join PARTICIPATED);
+select cname from CUSTOMER natural join ORDER where ORDER.odate = '2015-05-09';
+select order#, qty from order_items where qty = (select max(qty) from order_items);
+select shipdate from order_items natural join shipment where order_items.qty = (select max(qty) from order_items);
+delete from order_items where item = 20;
+delete from item where item = 20;
+select order# from shipment natural join warehouse where warehouse.city = 'Delhi';
+select cname from customer where cname like '%an';
+select cname, sum(ordamt) as t_ordamt from customer natural join orders group by cname order by t_ordamt desc;
+select cname from customer natural join orders natural join shipment where ordamt >=3 and shipdate = '2019-02-05';
