@@ -85,3 +85,5 @@ insert into warehouse values (04, 'Hyderabad');
 insert into warehouse values (05, 'Kolkatta');
 select customer.cname as custname, sum(ordamt) as no_of_orders, avg(ordamt) as avg_order_amt from customer NATURAL JOIN orders group by cname;
 select orders.order# from orders, shipment, warehouse where orders.order# = shipment.order# and shipment.warehouse# = warehouse.warehouse# and warehouse.city = 'Delhi';
+update order_items set qty = case when qty>10 then qty * 0.9 when qty <=10 then qty * 0.95 end;
+commit;
