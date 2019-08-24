@@ -1,0 +1,37 @@
+create table STUDENT (regno varchar(20), name varchar(50), major varchar(20), bdate date, primary key (regno));
+create table COURSE (course# int, cname varchar(30), dept varchar(30), primary key(course#));
+create table ENROLL (regno varchar(20), course# int, primary key (regno, course#), foreign key (course#) references course);
+create table BOOK_ADOPTION (course# int, sem int, book_isbn int, primary key(course#, book_isbn), foreign key (course#) references COURSE);
+create table TEXT (book_isbn int, booktitle varchar(50), publisher varchar(50), author varchar(50), primary key (book_isbn));
+insert into student values ('S01', 'Sankalp Sagar', 'CCE', DATE '2021-08-01');
+insert into student values ('S02', 'Plaknas Ragas', 'PnM', DATE '2020-08-01');
+insert into student values ('S03', 'Krish Desai', 'Home Science', DATE '2019-08-01');
+insert into student values ('S04', 'Ishi Yadav', 'Comp Science', DATE '2022-08-01');
+insert into student values ('S05', 'Mrigank Mohan', 'Statistics', DATE '2020-08-01');
+insert into course values(01, 'Neural Networks', 'ICT');
+insert into course values(02, 'Waste Your Time', 'PnM');
+insert into course values(03, 'Cooking with Radiation', 'HSc');
+insert into course values(04, 'Hardware Technology', 'CSE');
+insert into course values(05, 'Data Analysis', 'Stats');
+insert into enroll values ('S01', 1);
+insert into enroll values ('S02', 2);
+insert into enroll values ('S03', 3);
+insert into enroll values ('S04', 4);
+insert into enroll values ('S05', 5);
+insert into book_adoption values(1, 4, 1012);
+insert into book_adoption values(2, 6, 1032);
+insert into book_adoption values(3, 2, 1062);
+insert into book_adoption values(4, 4, 1023);
+insert into book_adoption values(5, 1, 9021);
+insert into text values (1012, 'Getting Started with NN', 'San Publishing', 'Scott Lang');
+insert into text values (1032, 'I Wasted My Money', 'Kilmi Publishing', 'Sayonara Laifu');
+insert into text values (1062, 'Extra Fingers and Extra Condiments', 'Halp Publishing', 'Sixe Fingirs');
+insert into text values (1023, 'Hardware for Dummies', 'Pan Publishing', 'Tony Stark');
+insert into text values (9021, 'What CSE Stole From Us', 'Furius Publishing', 'Emel Esjuzt Statz');
+insert into course values(6, 'Database Management System', 'ICT');
+insert into enroll values ('S01', 6);
+insert into book_adoption values (6, 5, 1013);
+insert into text values (1013, 'DBMS Made Easy', 'Ban Publishing', 'Ishimiya Yu');
+select course#, cname from course C where exists (select * from Book_Adoption B where C.course# = B.course# having count(*)>1);
+
+
