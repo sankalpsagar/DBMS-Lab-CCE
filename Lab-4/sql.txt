@@ -12,3 +12,4 @@ select order# from shipment natural join warehouse where warehouse.city = 'Delhi
 select cname from customer where cname like '%an';
 select cname, sum(ordamt) as t_ordamt from customer natural join orders group by cname order by t_ordamt desc;
 select cname from customer natural join orders natural join shipment where ordamt >=3 and shipdate = '2019-02-05';
+commit;
