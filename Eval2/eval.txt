@@ -1,0 +1,3 @@
+select * from orders where odate >= DATE '2019-08-01' and odate <= DATE '2019-08-15' and ordamt>1000;
+select order#, item#, qty, odate, cust, cname from ORDERS natural join ORDER_ITEMS natural join CUSTOMER where qty>10;
+select cname, city, order#, odate, shipdate from customer natural join orders natural join shipment natural join warehouse;
