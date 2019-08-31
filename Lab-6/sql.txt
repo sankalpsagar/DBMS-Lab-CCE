@@ -1,0 +1,108 @@
+SET SERVEROUTPUT ON;
+
+create or replace trigger displayDrivers
+AFTER INSERT ON PARTICIPATED
+FOR EACH ROW
+DECLARE
+d_id varchar2(10);
+n varchar2(50);
+addr varchar2(100);
+BEGIN
+SELECT driver_id INTO d_id FROM owns NATURAL JOIN person where regno='8100';
+SELECT name INTO n FROM PERSON WHERE DRIVER_ID = d_id;
+SELECT address INTO addr FROM PERSON WHERE DRIVER_ID = d_id;
+dbms_output.put('Name: '||n||' Address:'||addr);
+END;
+/
+
+insert into participated values ('D05', '8400', 13, 8900);
+
+--not working
+
+############################################################
+--returns total number of accidents in a year
+CREATE OR REPLACE FUNCTION return_count (abc IN number)
+RETURN number as total number(3);
+BEGIN
+Select count(report_number) INTO total from accident where extract(year from accd_date) = abc;
+RETURN total;
+END;
+/
+
+SELECT return_count(2018) FROM Dual;
+
+############################################################
+--displays total damage
+
+CREATE OR REPLACE PROCEDURE return_damage (n IN varchar2, y IN number)
+IS
+sumT INTEGER;
+BEGIN
+select sum(damage_amount) INTO sumT from participated natural join accident where driver_id = n and extract(year from accd_date) = y;
+dbms_output.put_line('Damage Amount: '||sumT||'.');
+END;
+/
+
+execute return_damage('D04', 2018);
+
+############################################################
+--displays accident which occured in a particular location
+
+CREATE OR REPLACE PROCEDURE return_deets_location (n IN varchar2)
+IS
+rno INTEGER;
+ad DATE;
+da INTEGER;
+BEGIN
+select report_number INTO rno from participated natural join accident where location = n;
+select accd_date INTO ad from participated natural join accident where location = n;
+select damage_amount INTO da from participated natural join accident where location = n;
+dbms_output.put_line('Report Number: '||rno||' Accident Date: '||ad||' Damage Amount: '||da||'.');
+END;
+/
+
+execute return_deets_location('Vellore');
+
+############################################################
+--trigger concept not done yet
+
+############################################################
+--cursor concept not done yet
+
+############################################################
+--ADDITIONAL QUESTIONS
+############################################################
+--function to withdraw money
+create table bank (acc_no integer, balance integer);
+
+insert into bank values (01, 10000);
+insert into bank values (02, 20000);
+insert into bank values (03, 25000);
+insert into bank values (04, 26000);
+insert into bank values (05, 30000);
+
+CREATE OR REPLACE FUNCTION withdraw_money (acc IN number, amt IN number)
+RETURN number as bal number(10);
+BEGIN
+UPDATE BANK SET BALANCE = BALANCE - amt WHERE ACC_NO = acc;
+SELECT BALANCE INTO bal FROM BANK WHERE ACC_NO = acc;
+RETURN bal;
+END;
+/
+
+DECLARE
+bal
+number(10);
+BEGIN
+bal := withdraw_money(&accountnumber, &withdrawalamount);
+dbms_output.put_line('Updated Balance: '||bal||'.');
+END;
+/
+
+############################################################
+--trigger concept not done yet
+
+############################################################
+--dunno
+
+commit;
