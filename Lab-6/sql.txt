@@ -83,10 +83,17 @@ insert into bank values (05, 30000);
 
 CREATE OR REPLACE FUNCTION withdraw_money (acc IN number, amt IN number)
 RETURN number as bal number(10);
+org_bal number (10);
 BEGIN
+SELECT BALANCE INTO org_bal FROM BANK WHERE ACC_NO = acc;
+IF (amt>org_bal) THEN
+dbms_output.put_line('ERROR: INSUFFICIENT FUNDS');
+return org_bal;
+ELSE
 UPDATE BANK SET BALANCE = BALANCE - amt WHERE ACC_NO = acc;
 SELECT BALANCE INTO bal FROM BANK WHERE ACC_NO = acc;
 RETURN bal;
+END IF;
 END;
 /
 
